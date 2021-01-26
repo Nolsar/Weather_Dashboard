@@ -21,7 +21,7 @@
                     <input class="input" type="text" placeholder="search for a city">
                 </div>
                 <div class="control">
-                    <a class="button is-info">
+                    <a class="button is-info" id="searchButton">
                         Search
                     </a>
                 </div>
@@ -33,13 +33,18 @@
         <div class="column">
             <section class="section">
                 <div class="container">
-                    <h1 class="title">City & Date</h1>
+                    <h1 class="title" id="currentCity">Current City</h1>
                     <h2 class="subtitle">
-                        A simple container to divide your page into <strong>sections</strong>, like the one you're
-                        currently reading
+                        <p>Temperature:<span class="current" id="temperature"></span></p>
+                        <p>Humidity:<span class="current" id="humidity"></span></p>
+                        <p>Wind Speed:<span class="current" id="windSpeed"></span></p>
+                        <p>UV index:<span class="current" id="uvIndex"></span></p>
                     </h2>
                 </div>
             </section>
+            <div id="forecast">
+                <h1>5-Day Forecast:</h1>
+            </div>
             <div class="row">
                 <div class="columns is-multiline is-mobile">
                     <div class="column is-one-fifth">
@@ -63,6 +68,7 @@
 
     </div>
     </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>
 
