@@ -1,33 +1,42 @@
-var searchCity = $("#input");
+var searchCity = $(".input");
 var searchButton = $("#searchButton");
 var currCity = $("#currentCity");
 var currTemperature = $("#temperature");
 var currHumidty = $("#humidity");
 var currWindSpeed = $("#windSpeed");
 var currUvIndex = $("#uvIndex");
-var city = "London"
 
+// WHEN I search for a city
+searchButton.on("click", function () {
+  searchCity.val();
 
-var apiKey = "d46664f3ff3305cc0b36e663654a667d"
-var queryUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
-
-$.ajax({
-  url: queryUrl,
-  method: "GET"
-}).then(function (response) {
-  console.log(queryUrl);
-  console.log(response);
-
+  //returns the inputted city into the console
+  console.log(searchCity.val());
+  getWeather();
 });
 
+//function that gets the current weather for the city
+function getWeather(){
+  //API & key
+  var apiKey = "d46664f3ff3305cc0b36e663654a667d";
+  var queryUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + searchCity.val() + "&appid=" + apiKey;
 
+  //ajax call
+  $.ajax({
+    url: queryUrl,
+    method: "GET"
+  }).then(function (response) {
+    console.log(queryUrl);
+    console.log(response);
 
+  });
+}
 
 
 // GIVEN a weather dashboard with form inputs
 
 
-// WHEN I search for a city
+
 
 
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
