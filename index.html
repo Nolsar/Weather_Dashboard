@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <!-- title of HTML -->
     <h1 class="title">
         Weather Dashboard
     </h1>
@@ -21,27 +22,30 @@
                     <input class="input" type="text" placeholder="search for a city">
                 </div>
                 <div class="control">
+                    <!-- search button -->
                     <a class="button is-info" id="searchButton">
                         Search
                     </a>
                 </div>
             </div>
+            <!-- search history dispalyed here -->
             <div class="searchHistory">
-                <p>search History Goes Here</p>
             </div>
         </div>
         <div class="column">
             <section class="section">
                 <div class="container">
+                    <!-- Current searched city is displayed here -->
                     <h1 class="title" id="currentCity">Current City</h1>
-                    <h2 class="subtitle">
-                        <p><span class="current" id="temperature"></span></p>
-                        <p><span class="current" id="humidity"></span></p>
-                        <p><span class="current" id="windSpeed"></span></p>
-                        <p><span class="current" id="uvIndex"></span></p>
+                    <!-- current city weather data displayed here -->
+                    <p><span class="current" id="temperature"></span></p>
+                    <p><span class="current" id="humidity"></span></p>
+                    <p><span class="current" id="windSpeed"></span></p>
+                    <p><span class="current" id="uvIndex"></span></p>
                     </h2>
                 </div>
             </section>
+            <!-- five day forecast displayed here -->
             <div id="forecast">
                 <h1>5-Day Forecast:</h1>
             </div>

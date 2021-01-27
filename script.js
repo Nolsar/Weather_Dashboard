@@ -26,6 +26,7 @@ searchButton.on("click", function () {
   //returns the inputted city into the console
   console.log(searchCity.val());
   getWeather();
+  Get5DayForecast();
 });
 
 //render function to display searched cities
@@ -72,7 +73,6 @@ function getWeather() {
     currHumidity.text("Humidity: " + response.main.humidity + "%");
 
 
-
     //displays weather conditions in the console
     // console.log(response.name);
     // console.log(response.wind.speed);
@@ -80,6 +80,24 @@ function getWeather() {
     // console.log(response.main.humidity);
   });
 }
+
+// five day forecast
+function Get5DayForecast (){
+  var queryUrlForecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchCity.val() + "&appid=d46664f3ff3305cc0b36e663654a667d";
+  
+  //ajax xall to retrieve 5 day forecast
+  $.ajax({
+    url: queryUrlForecast,
+    method: "GET",
+
+  }).then(function(response){
+    console.log(queryUrlForecast);
+    console.log(response);
+
+  });
+}
+
+
 
 
 // GIVEN a weather dashboard with form inputs
