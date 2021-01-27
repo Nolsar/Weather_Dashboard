@@ -5,17 +5,44 @@ var currTemp = $("#temperature");
 var currHumidity = $("#humidity")
 var currwindSpeed = $("#windSpeed");
 var currUvIndex = $("#uvIndex");
+var searchHistory = $(".searchHistory");
 
+var cityList = localStorage.getItem("city-list");
+if(cityList === null){
+  cityList= [];
+} else{
+  cityList = JSON.parse(cityList);
+  renderList();
+}
 
 // WHEN I search for a city
 searchButton.on("click", function () {
   searchCity.val();
-
+  //saves searched city to local storage
+  cityList.push(searchCity.val());
+  localStorage.setItem("city-list", JSON.stringify(cityList));
+  
   //returns the inputted city into the console
   console.log(searchCity.val());
   getWeather();
 });
 
+function renderList(){
+  var cityListTag = document.querySelector("ul");
+  if (cityListTag === null){
+    console.log("list does not exist yet");
+    cityListTag = document.createElement("ul");
+    searchHistory.append(cityListTag);
+  }
+
+  var innerList = "";
+  for( var e = 0; e <cityList.length; e++){
+    innerList += `<li> ${cityList[e]} </li>`;
+  }
+  cityListTag.innerHTML = innerList;
+}
+
+renderList();
 //function that gets the current weather for the city
 function getWeather() {
   //API & key
@@ -30,24 +57,24 @@ function getWeather() {
     console.log(queryUrl);
     console.log(response);
 
+    //displays current weather data and city name
     currCity.html("<h1>" + response.name + "</h1>");
+    //converts celcius to fahrenheit
     var tempfahrenheit = (response.main.temp - 273.15) * 1.80 + 32;
     currTemp.text("Temperature: " + tempfahrenheit.toFixed(2) + " F");
     currwindSpeed.text("Wind Speed: " + response.wind.speed + " mph");
     currHumidity.text("Humidity: " + response.main.humidity + "%");
 
-    
+
 
     //displays weather conditions in the console
-    console.log(response.name);
-    console.log(response.wind.speed);
-    console.log(response.main.temp);
-    console.log(response.main.humidity);
+    // console.log(response.name);
+    // console.log(response.wind.speed);
+    // console.log(response.main.temp);
+    // console.log(response.main.humidity);
   });
 }
-//main.temp
-//main.humidity
-//wind.speed
+
 
 // GIVEN a weather dashboard with form inputs
 
