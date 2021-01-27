@@ -1,10 +1,8 @@
 var searchCity = $(".input");
 var searchButton = $("#searchButton");
 var currCity = $("#currentCity");
-var currTemperature = $("#temperature");
-var currHumidty = $("#humidity");
-var currWindSpeed = $("#windSpeed");
-var currUvIndex = $("#uvIndex");
+var currWeather = $("#current-weather");
+
 
 // WHEN I search for a city
 searchButton.on("click", function () {
@@ -16,7 +14,7 @@ searchButton.on("click", function () {
 });
 
 //function that gets the current weather for the city
-function getWeather(){
+function getWeather() {
   //API & key
   var apiKey = "d46664f3ff3305cc0b36e663654a667d";
   var queryUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + searchCity.val() + "&appid=" + apiKey;
@@ -29,9 +27,16 @@ function getWeather(){
     console.log(queryUrl);
     console.log(response);
 
+    
+    console.log(response.name);
+    console.log(response.wind.speed);
+    console.log(response.main.temp);
+    console.log(response.main.humidity);
   });
 }
-
+//main.temp
+//main.humidity
+//wind.speed
 
 // GIVEN a weather dashboard with form inputs
 
