@@ -7,10 +7,11 @@ var currwindSpeed = $("#windSpeed");
 var currUvIndex = $("#uvIndex");
 var searchHistory = $(".searchHistory");
 
+//retrieve searched cities from local storage and renders to page
 var cityList = localStorage.getItem("city-list");
-if(cityList === null){
-  cityList= [];
-} else{
+if (cityList === null) {
+  cityList = [];
+} else {
   cityList = JSON.parse(cityList);
   renderList();
 }
@@ -21,28 +22,33 @@ searchButton.on("click", function () {
   //saves searched city to local storage
   cityList.push(searchCity.val());
   localStorage.setItem("city-list", JSON.stringify(cityList));
-  
+
   //returns the inputted city into the console
   console.log(searchCity.val());
   getWeather();
 });
 
-function renderList(){
+//render function to display searched cities
+function renderList() {
   var cityListTag = document.querySelector("ul");
-  if (cityListTag === null){
+
+  //creates list for cities searched
+  if (cityListTag === null) {
     console.log("list does not exist yet");
     cityListTag = document.createElement("ul");
     searchHistory.append(cityListTag);
   }
 
   var innerList = "";
-  for( var e = 0; e <cityList.length; e++){
+  for (var e = 0; e < cityList.length; e++) {
     innerList += `<li> ${cityList[e]} </li>`;
   }
   cityListTag.innerHTML = innerList;
 }
 
 renderList();
+
+
 //function that gets the current weather for the city
 function getWeather() {
   //API & key
