@@ -1,7 +1,10 @@
 var searchCity = $(".input");
 var searchButton = $("#searchButton");
 var currCity = $("#currentCity");
-var currWeather = $("#current-weather");
+var currTemp = $("#temperature");
+var currHumidity = $("#humidity")
+var currwindSpeed = $("#windSpeed");
+var currUvIndex = $("#uvIndex");
 
 
 // WHEN I search for a city
@@ -27,7 +30,15 @@ function getWeather() {
     console.log(queryUrl);
     console.log(response);
 
+    currCity.html("<h1>" + response.name + "</h1>");
+    var tempfahrenheit = (response.main.temp - 273.15) * 1.80 + 32;
+    currTemp.text("Temperature: " + tempfahrenheit.toFixed(2) + " F");
+    currwindSpeed.text("Wind Speed: " + response.wind.speed + " mph");
+    currHumidity.text("Humidity: " + response.main.humidity + "%");
+
     
+
+    //displays weather conditions in the console
     console.log(response.name);
     console.log(response.wind.speed);
     console.log(response.main.temp);
