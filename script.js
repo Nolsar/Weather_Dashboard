@@ -6,6 +6,11 @@ var currHumidity = $("#humidity")
 var currwindSpeed = $("#windSpeed");
 var currUvIndex = $("#uvIndex");
 var searchHistory = $(".searchHistory");
+var day1 = $("#day1");
+var day2 = $("#day2");
+var day3 = $("#day3");
+var day4 = $("#day4");
+var day5 = $("#day5");
 
 //retrieve searched cities from local storage and renders to page
 var cityList = localStorage.getItem("city-list");
@@ -82,20 +87,59 @@ function getWeather() {
 }
 
 // five day forecast
-function Get5DayForecast (){
+function Get5DayForecast() {
   var queryUrlForecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchCity.val() + "&appid=d46664f3ff3305cc0b36e663654a667d";
-  
-  //ajax xall to retrieve 5 day forecast
+  $("#card-row").empty();
+  //ajax call to retrieve 5 day forecast
   $.ajax({
     url: queryUrlForecast,
     method: "GET",
 
-  }).then(function(response){
-    console.log(queryUrlForecast);
-    console.log(response);
-
-  });
+  }).then(function (fiveDayReponse) {
+    for (let i = 0; i != fiveDayReponse.list.length; i += 8) {
+      let cityObj = {
+        date: fiveDayReponse.list[i].dt_txt,
+        icon: fiveDayReponse.list[i].weather[0].icon,
+        temp: fiveDayReponse.list[i].main.temp,
+        humidity: fiveDayReponse.list[i].main.humidity,
+      }
+      let dateStr = cityObj.date;
+      let trimmedDate = dateStr.substring(0, 10);
+      let weatherIco = `https:///openweathermap.org/img/w/${cityObj.icon}.png`;
+      createForecastCard(trimmedDate, weatherIco, cityObj.temp, cityObj.humidity);
+    }
+  })
 }
+function createForecastCard(date, icon, temp, humidity){
+// HTML elements we will create to later
+let fiveDayCardEl = $("<div>").attr("class", "five-day-card");
+let cardDate = $("<h1>").attr("class", "card-text");
+let cardIcon = $("<img>").attr("class", "weatherIcon");
+let cardTemp = $("<p>").attr("class", "card-text");
+let cardHumidity = $("<p>").attr("class", "card-text");
+
+$("#card-row").append(fiveDayCardEl);
+cardDate.text(date);
+cardIcon.attr("src", icon);
+cardTemp.text(`Temp: ${temp} °F`);
+cardHumidity.text(`Humidity: ${humidity}%`);
+fiveDayCardEl.append(cardDate, cardIcon, cardTemp, cardHumidity);
+}
+
+
+  // .then(function(response){
+  //   console.log(queryUrlForecast);
+  //   console.log(response);
+
+
+
+
+//UV Index
+// function getUvIndex(){
+//   var lat = "";
+//   var lon = "";
+//   var queryUrlUv = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=d46664f3ff3305cc0b36e663654a667d",
+// }
 
 
 
