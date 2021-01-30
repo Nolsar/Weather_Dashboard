@@ -7,6 +7,13 @@ var currwindSpeed = $("#windSpeed");
 var currUvIndex = $("#uvIndex");
 var searchHistory = $(".searchHistory");
 
+var today = new Date();
+let dd = String(today.getDate()).padStart(2, '0');
+let mm = String(today.getMonth() + 1).padStart(2, '0');
+let yyyy = today.getFullYear();
+var date = mm + '/' + dd + '/' + yyyy;
+console.log(date);
+
 
 //retrieve searched cities from local storage and renders to page
 var cityList = localStorage.getItem("city-list");
@@ -65,18 +72,13 @@ function getWeather() {
     console.log(queryUrl);
     console.log(response);
 
-    var today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0');
-    let yyyy = today.getFullYear();
-    var date = mm + '/' + dd + '/' + yyyy;
-    console.log(date);
+
 
     //displays current weather data and city name
     currCity.html("<h1>" + response.name + " " + date + "</h1>");
     //converts celcius to fahrenheit
     var tempfahrenheit = (response.main.temp - 273.15) * 1.80 + 32;
-    currTemp.text("Temperature: " + tempfahrenheit.toFixed(2) + " F");
+    currTemp.text("Temperature: " + tempfahrenheit.toFixed(2) + "°F");
     currwindSpeed.text("Wind Speed: " + response.wind.speed + " mph");
     currHumidity.text("Humidity: " + response.main.humidity + "%");
 
@@ -121,10 +123,10 @@ function createForecastCard(date, icon, temp, humidity) {
   let cardTemp = $("<p>").attr("class", "card-text");
   let cardHumidity = $("<p>").attr("class", "card-text");
 
-  $("#card-row").append(fiveDayCardEl);
+    $("#card-row").append(fiveDayCardEl);
   cardDate.text(date);
   cardIcon.attr("src", icon);
-  cardTemp.text(`Temp: ${temp} °F`);
+  cardTemp.text(`Temp: ${((temp- 273.15) * 1.80 + 32).toFixed(2)} °F`);
   cardHumidity.text(`Humidity: ${humidity}%`);
   fiveDayCardEl.append(cardDate, cardIcon, cardTemp, cardHumidity);
 }
