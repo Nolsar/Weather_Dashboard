@@ -35,6 +35,7 @@ searchButton.on("click", function () {
   console.log(searchCity.val());
   getWeather();
   Get5DayForecast();
+  // getUvIndex();
 });
 
 //render function to display searched cities
@@ -43,7 +44,6 @@ function renderList() {
 
   //creates list for cities searched
   if (cityListTag === null) {
-    console.log("list does not exist yet");
     cityListTag = document.createElement("ul");
     searchHistory.append(cityListTag);
   }
@@ -83,13 +83,56 @@ function getWeather() {
     currHumidity.text("Humidity: " + response.main.humidity + "%");
 
 
-    //displays weather conditions in the console
-    // console.log(response.name);
-    // console.log(response.wind.speed);
-    // console.log(response.main.temp);
-    // console.log(response.main.humidity);
-  });
+    UVIndex(response.coord.lon,response.coord.lat);
+    // function longitude(){
+    //   var long =(response.coord.lon);
+    //   console.log(response.coor.lon);
+    // }
+    // longitude();
+  
+    // function lattitude(){
+    //   var latt =(response.coord.lat);
+    //   console.log(response.coor.lat);
+    // }
+    // lattitude();
+
+//     //Displays UV Index
+//     // console.log(response.coord.lon, response.coord.lat);
+//     function lattitude(response){
+//     var lat=(response.coord);
+//     console.log(response);
+//   }
+  })
 }
+
+function UVIndex(ln,lt){
+  //lets build the url for uvindex.
+  var queryUrl="https://api.openweathermap.org/data/2.5/uvi?appid=d46664f3ff3305cc0b36e663654a667d" +"&lat="+lt+"&lon="+ln;
+  
+  $.ajax({
+          url:queryUrl,
+          method:"GET",
+          }).then(function(response){
+          currUvIndex.html("UV Index:" + " " + response.value);
+          });
+}
+
+
+
+
+
+
+//UV Index Function
+// function getUvIndex(){
+//   // var queryUrl= "http://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + lattitude + "&lon=" + longitude + "&cnt={cnt}&appid=d46664f3ff3305cc0b36e663654a667d";
+// $.ajax({
+//   url: queryUrl,
+//   method: "GET",
+// }).then(function(response){
+//   console.log(queryUrlUv);
+//   console.log(response);
+// })
+
 
 // five day forecast
 function Get5DayForecast() {
@@ -116,29 +159,17 @@ function Get5DayForecast() {
   })
 }
 function createForecastCard(date, icon, temp, humidity) {
-  // HTML elements we will create to later
+  // HTML elements 
   let fiveDayCardEl = $("<div>").attr("class", "five-day-card");
   let cardDate = $("<h1>").attr("class", "card-text");
   let cardIcon = $("<img>").attr("class", "weatherIcon");
   let cardTemp = $("<p>").attr("class", "card-text");
   let cardHumidity = $("<p>").attr("class", "card-text");
 
-    $("#card-row").append(fiveDayCardEl);
+  $("#card-row").append(fiveDayCardEl);
   cardDate.text(date);
   cardIcon.attr("src", icon);
   cardTemp.text(`Temp: ${((temp- 273.15) * 1.80 + 32).toFixed(2)} °F`);
   cardHumidity.text(`Humidity: ${humidity}%`);
   fiveDayCardEl.append(cardDate, cardIcon, cardTemp, cardHumidity);
 }
-
-
-
-//UV Index
-// function getUvIndex(){
-//   var lat = "";
-//   var lon = "";
-//   var queryUrlUv = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=d46664f3ff3305cc0b36e663654a667d",
-// }
-
-
-
