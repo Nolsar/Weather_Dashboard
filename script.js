@@ -6,11 +6,7 @@ var currHumidity = $("#humidity")
 var currwindSpeed = $("#windSpeed");
 var currUvIndex = $("#uvIndex");
 var searchHistory = $(".searchHistory");
-var day1 = $("#day1");
-var day2 = $("#day2");
-var day3 = $("#day3");
-var day4 = $("#day4");
-var day5 = $("#day5");
+
 
 //retrieve searched cities from local storage and renders to page
 var cityList = localStorage.getItem("city-list");
@@ -69,8 +65,15 @@ function getWeather() {
     console.log(queryUrl);
     console.log(response);
 
+    var today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+    var date = mm + '/' + dd + '/' + yyyy;
+    console.log(date);
+
     //displays current weather data and city name
-    currCity.html("<h1>" + response.name + "</h1>");
+    currCity.html("<h1>" + response.name + " " + date + "</h1>");
     //converts celcius to fahrenheit
     var tempfahrenheit = (response.main.temp - 273.15) * 1.80 + 32;
     currTemp.text("Temperature: " + tempfahrenheit.toFixed(2) + " F");
@@ -110,27 +113,21 @@ function Get5DayForecast() {
     }
   })
 }
-function createForecastCard(date, icon, temp, humidity){
-// HTML elements we will create to later
-let fiveDayCardEl = $("<div>").attr("class", "five-day-card");
-let cardDate = $("<h1>").attr("class", "card-text");
-let cardIcon = $("<img>").attr("class", "weatherIcon");
-let cardTemp = $("<p>").attr("class", "card-text");
-let cardHumidity = $("<p>").attr("class", "card-text");
+function createForecastCard(date, icon, temp, humidity) {
+  // HTML elements we will create to later
+  let fiveDayCardEl = $("<div>").attr("class", "five-day-card");
+  let cardDate = $("<h1>").attr("class", "card-text");
+  let cardIcon = $("<img>").attr("class", "weatherIcon");
+  let cardTemp = $("<p>").attr("class", "card-text");
+  let cardHumidity = $("<p>").attr("class", "card-text");
 
-$("#card-row").append(fiveDayCardEl);
-cardDate.text(date);
-cardIcon.attr("src", icon);
-cardTemp.text(`Temp: ${temp} °F`);
-cardHumidity.text(`Humidity: ${humidity}%`);
-fiveDayCardEl.append(cardDate, cardIcon, cardTemp, cardHumidity);
+  $("#card-row").append(fiveDayCardEl);
+  cardDate.text(date);
+  cardIcon.attr("src", icon);
+  cardTemp.text(`Temp: ${temp} °F`);
+  cardHumidity.text(`Humidity: ${humidity}%`);
+  fiveDayCardEl.append(cardDate, cardIcon, cardTemp, cardHumidity);
 }
-
-
-  // .then(function(response){
-  //   console.log(queryUrlForecast);
-  //   console.log(response);
-
 
 
 
@@ -143,41 +140,3 @@ fiveDayCardEl.append(cardDate, cardIcon, cardTemp, cardHumidity);
 
 
 
-
-// GIVEN a weather dashboard with form inputs
-
-
-
-
-
-// THEN I am presented with current and future conditions for that city and that city is added to the search history
-
-
-// WHEN I view current weather conditions for that city
-
-
-// THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-
-
-// WHEN I view the UV index
-
-
-// THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
-
-
-// WHEN I view future weather conditions for that city
-
-
-// THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
-
-
-// WHEN I click on a city in the search history
-
-
-// THEN I am again presented with current and future conditions for that city
-
-
-// WHEN I open the weather dashboard
-
-
-// THEN I am presented with the last searched city forecast
