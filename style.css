@@ -1,3 +1,10 @@
+#weatherDashboard {
+    text-align: center;
+    color: white;
+    background-color: rgb(78, 78, 78);
+    line-height: 70px;
+}
+
 #card-row {
     display: flex;
     flex-direction: row;
